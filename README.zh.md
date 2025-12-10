@@ -1,0 +1,23 @@
+# Show Copilot ✨
+
+[English](README.md) | 中文
+
+轻量 Python 脚本，通过修改本地 Edge 配置让浏览器直接进入 Copilot/Chat 模式，无需额外开关。
+
+## ⚡️ 快速开始（uv）
+1. 安装 uv（PowerShell，一次性）：`irm https://astral.sh/uv/install.ps1 | iex`（其他 shell 请参考 uv 文档）。
+2. 创建并激活虚拟环境：`uv venv`，然后用 `uv run python -V` 确认可用。
+3. 安装依赖并运行：`uv run python main.py`。
+4. 补丁过程中 Edge 会被关闭；重启后根据提示按 Enter 结束。
+
+## 🔧 做了什么
+- 自动定位 Windows / macOS / Linux 上的 Edge Stable / Canary / Dev / Beta 用户数据目录。
+- 关闭顶层 Edge 进程以避免文件锁，再在补丁后恢复。
+- 在 `Local State` 写入 `variations_country: "US"`。
+- 在所有配置目录（`Default`、`Profile X`）的 `Preferences` 中写入 `browser.chat_ip_eligibility_status: true`。
+- 重启补丁前已运行的 Edge 版本。
+
+## 🛟 注意
+- 脚本会修改现有 Edge 配置，如需保险请先备份 `User Data`。
+- 使用拥有该 Edge 配置的同一系统用户运行，确保有写入权限。
+- 与 Microsoft 无关，风险自担。
