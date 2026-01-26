@@ -13,7 +13,10 @@ Tiny Python helper that enables Chrome's built-in AI features by patching your l
 - Google Chrome installed (Stable/Canary/Dev/Beta)
 
 ## ⚡️ Quick Start (uv)
-1. Install uv (once, PowerShell): `irm https://astral.sh/uv/install.ps1 | iex` (see uv docs for other shells).
+1. Install uv (once):
+   - Windows: `powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"`
+   - macOS & Linux: `curl -LsSf https://astral.sh/uv/install.sh | sh`
+   - See [uv installation docs](https://docs.astral.sh/uv/getting-started/installation/) for more options.
 2. Install deps (creates venv automatically): `uv sync`.
 3. Run the script: `uv run main.py`.
 4. Chrome will close while patching; after it restarts, press Enter to finish.

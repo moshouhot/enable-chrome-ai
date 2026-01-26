@@ -13,7 +13,10 @@
 - 已安装 Google Chrome（Stable/Canary/Dev/Beta）
 
 ## ⚡️ 快速开始（uv）
-1. 安装 uv（PowerShell，一次性）：`irm https://astral.sh/uv/install.ps1 | iex`（其他 shell 请参考 uv 文档）。
+1. 安装 uv（一次性）：
+   - Windows: `powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"`
+   - macOS & Linux: `curl -LsSf https://astral.sh/uv/install.sh | sh`
+   - 更多安装方式请参考 [uv 安装文档](https://docs.astral.sh/uv/getting-started/installation/)。
 2. 安装依赖（自动创建虚拟环境）：`uv sync`。
 3. 运行脚本：`uv run main.py`。
 4. 补丁过程中 Chrome 会被关闭；重启后根据提示按 Enter 结束。
