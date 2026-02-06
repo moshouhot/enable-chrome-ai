@@ -11,10 +11,10 @@ Enable Gemini in Chrome, AI Powered History search, and DevTools AI Innovations 
 
 <img width="512" alt="Google Chrome Gemini in Chrome" src="https://github.com/user-attachments/assets/a88c56a7-f20b-432a-926c-0184194225b4" />
 
-Tiny Python helper that enables Chrome's built-in AI features by patching your local profile data (`variations_country`, `variations_permanent_consistency_country`, and `is_glic_eligible`)—no browser flags required.
+Tiny Python helper that enables Chrome's built-in AI features by patching your local profile data—no manual browser flags required.
 
 ## ✅ Requirements
-- Python `3.13+` (see `.python-version` / `pyproject.toml`)
+- Python `3.10+` (see `.python-version` / `pyproject.toml`)
 - Google Chrome installed (Stable/Canary/Dev/Beta)
 
 ## ⚡️ Quick Start (uv)
@@ -31,12 +31,22 @@ Tiny Python helper that enables Chrome's built-in AI features by patching your l
 2. Install deps: `python -m pip install psutil`.
 3. Run: `python main.py`.
 
-## 🔧 What Happens
+## 🔧 What It Modifies (5 Changes)
+
+The script modifies the following 5 settings in Chrome's `Local State` file:
+
+| # | Setting | Change | Purpose |
+|---|---------|--------|---------|
+| 1 | `chrome://flags/#glic` | → Enabled | Enable Gemini in Chrome feature |
+| 2 | `chrome://flags/#glic-side-panel` | → Enabled | Enable Gemini side panel |
+| 3 | `is_glic_eligible` | → `true` | Mark user eligible for AI features |
+| 4 | `variations_country` | → `"us"` | Bypass region restrictions |
+| 5 | `variations_permanent_consistency_country[1]` | → `"us"` | Ensure consistent region setting |
+
+### How It Works
 - Finds Chrome user data for Stable/Canary/Dev/Beta on Windows, macOS, and Linux.
 - Kills top-level Chrome processes to avoid file locks, then brings them back.
-- Sets all `is_glic_eligible` to `true` in `Local State` (recursive search).
-- Sets `variations_country` to `"us"` in `Local State`.
-- Sets `variations_permanent_consistency_country` to `["<version>", "us"]` in `Local State`.
+- Applies the 5 modifications above to `Local State`.
 - Restarts any Chrome builds that were running before the patch.
 
 ## ⚠️ Caveats / Known Limitations

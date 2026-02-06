@@ -10,10 +10,10 @@
 
 <img width="512" alt="Google Chrome Gemini in Chrome" src="https://github.com/user-attachments/assets/a88c56a7-f20b-432a-926c-0184194225b4" />
 
-轻量 Python 脚本，通过修改本地 Chrome 配置（`variations_country`、`variations_permanent_consistency_country` 和 `is_glic_eligible`）启用浏览器内置 AI 功能，无需额外开关。
+轻量 Python 脚本，通过修改本地 Chrome 配置自动启用浏览器内置 AI 功能，无需手动设置 flags。
 
 ## ✅ 环境要求
-- Python `3.13+`（见 `.python-version` / `pyproject.toml`）
+- Python `3.10+`（见 `.python-version` / `pyproject.toml`）
 - 已安装 Google Chrome（Stable/Canary/Dev/Beta）
 
 ## ⚡️ 快速开始（uv）
@@ -30,12 +30,22 @@
 2. 安装依赖：`python -m pip install psutil`。
 3. 运行：`python main.py`。
 
-## 🔧 做了什么
+## 🔧 修改内容（共 5 处）
+
+脚本会修改 Chrome `Local State` 文件中的以下 5 项设置：
+
+| # | 设置项 | 修改 | 作用 |
+|---|--------|------|------|
+| 1 | `chrome://flags/#glic` | → 启用 | 启用 Gemini in Chrome 功能 |
+| 2 | `chrome://flags/#glic-side-panel` | → 启用 | 启用 Gemini 侧边栏 |
+| 3 | `is_glic_eligible` | → `true` | 标记用户有资格使用 AI 功能 |
+| 4 | `variations_country` | → `"us"` | 绕过地区限制 |
+| 5 | `variations_permanent_consistency_country[1]` | → `"us"` | 确保地区设置一致性 |
+
+### 工作流程
 - 自动定位 Windows / macOS / Linux 上的 Chrome Stable / Canary / Dev / Beta 用户数据目录。
 - 关闭顶层 Chrome 进程以避免文件锁，再在补丁后恢复。
-- 在 `Local State` 中递归查找并将所有 `is_glic_eligible` 设为 `true`。
-- 在 `Local State` 中将 `variations_country` 设为 `"us"`。
-- 在 `Local State` 中将 `variations_permanent_consistency_country` 设为 `["<版本号>", "us"]`。
+- 应用上述 5 项修改到 `Local State`。
 - 重启补丁前已运行的 Chrome 版本。
 
 ## ⚠️ 已知限制 / 注意事项
