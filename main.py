@@ -83,6 +83,18 @@ def set_all_is_glic_eligible(obj):
     return modified
 
 
+def disable_default_browser_check(local_state):
+    """Disable default browser check prompt."""
+    if "browser" not in local_state:
+        local_state["browser"] = {}
+
+    if local_state["browser"].get("check_default_browser") != False:
+        local_state["browser"]["check_default_browser"] = False
+        print("Disabled default browser check")
+        return True
+    return False
+
+
 def enable_chrome_flags(local_state):
     """Enable Chrome flags: glic@1, glic-side-panel@1 in browser.enabled_labs_experiments."""
     required_flags = ["glic@1", "glic-side-panel@1"]
@@ -128,6 +140,9 @@ def patch_local_state(user_data_path):
     modified = False
 
     if enable_chrome_flags(local_state):
+        modified = True
+
+    if disable_default_browser_check(local_state):
         modified = True
 
     if set_all_is_glic_eligible(local_state):
